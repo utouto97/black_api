@@ -32,7 +32,7 @@ module Api::V1
       render json: { message: 'created user successfully', user: user }
     end
 
-    def delete
+    def destroy
       @user.destroy
       render json: { message: 'deleted user', user: @user }
     end
