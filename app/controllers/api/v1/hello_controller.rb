@@ -1,14 +1,14 @@
 module Api::V1
   class HelloController < ApplicationController
-    include FirebaseAuthConcern
-    before_action :set_auth, only: %i[index]
+    include CurrentUserConcern
+    before_action :set_user, only: %i[index]
 
-    def set_auth
-      @auth = authenticate_token_by_firebase
+    def set_user
+      @user = current_user
     end
 
     def index
-      render json: { message: 'hello', user: @auth }
+      render json: { message: 'hello', user: @user }
     end
   end
 end
