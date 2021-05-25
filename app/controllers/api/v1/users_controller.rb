@@ -2,7 +2,7 @@ module Api::V1
   class UsersController < ApplicationController
     include FirebaseAuthConcern
     include CurrentUserConcern
-    before_action :set_user, only: %i[index]
+    before_action :set_user, only: %i[index, delete]
 
     def set_user
       @user = current_user
@@ -17,23 +17,24 @@ module Api::V1
       auth = authenticate_token_by_firebase
       render json: { status: :unauthorized } and return unless auth[:data]
 
-      uid = auth[:data][:uid]
-      user = User.find_by(firebase_uid: uid)
-      render json: { message: 'user already exist'} and return unless user.blank?
-
       username = params[:username]
-      render json: { message: 'username is required'} and return unless username
+      render json: { status: :bad_request } and return unless username
 
+      uid = auth[:data][:uid]
       email = auth[:data][:decoded_token][:payload]["email"]
-      pp email
-      user = User.new(
-        firebase_uid: uid,
-        email: email,
-        username: username
-      )
-      user.save
+
+      user = User.find_or_create_by(firebase_uid: uid) do |user|
+        user.firebase_uid = uid
+        user.email = email
+        user.username = username
+      end
 
       render json: { message: 'created user successfully', user: user }
+    end
+
+    def delete
+      @user.destroy
+      render json: { message: 'deleted user', user: @user }
     end
   end
 end

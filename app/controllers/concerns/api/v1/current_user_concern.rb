@@ -10,8 +10,6 @@ module Api::V1
       uid = auth[:data][:uid]
       user = User.find_by(firebase_uid: uid)
 
-      return nil if user.blank?
-
       return user
     end
   end
