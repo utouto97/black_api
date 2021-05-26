@@ -11,8 +11,8 @@ Rails.application.routes.draw do
 
         scope 'room' do
           get '/', to: 'users#rooms'
-          post '/:room_id', to: 'rooms#join'
-          delete  '/:room_id', to: 'rooms#leave'
+          post '/:room_id', to: 'users#join'
+          delete  '/:room_id', to: 'users#leave'
         end
 
         get '/followings', to: 'relationships#followings'
