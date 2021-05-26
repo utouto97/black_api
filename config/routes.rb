@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get '/', to: 'users#index'
         post '/', to: 'users#create'
         delete '/', to: 'users#destroy'
+        get '/rooms', to: 'users#rooms'
 
         get '/followings', to: 'relationships#followings'
         post '/follow', to: 'relationships#follow'
@@ -17,7 +18,8 @@ Rails.application.routes.draw do
       scope 'room' do
         get '/', to: 'rooms#index'
         post '/', to: 'rooms#create'
-        get '/:id', to: 'rooms#join'
+        post '/:room_id', to: 'rooms#join'
+        delete  '/:room_id', to: 'rooms#leave'
       end
     end
   end

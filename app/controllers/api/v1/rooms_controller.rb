@@ -22,5 +22,17 @@ module Api::V1
       render json: { status: :success, room: room }
     end
 
+    def join
+      room_id = params[:room_id]
+      @user.join(room_id)
+      render json: { status: :success, room: @user.rooms}
+    end
+
+    def leave
+      room_id = params[:room_id]
+      @user.leave(room_id)
+      render json: { status: :success, room: @user.rooms}
+    end
+
   end
 end

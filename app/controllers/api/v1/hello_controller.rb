@@ -8,7 +8,12 @@ module Api::V1
     end
 
     def index
-      render json: { message: 'hello', user: @user, others: @user.others }
+      render json: {
+        message: 'hello',
+        user: @user,
+        others: @user.others,
+        rooms: @user.rooms,
+      }
     end
   end
 end
