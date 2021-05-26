@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :rooms, through: :room_users
 
   def join(room_id)
+    room = Room.find_by(id: room_id)
     room_user = self.room_users.find_or_create_by(room_id: room_id)
   end
 

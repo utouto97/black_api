@@ -2,7 +2,7 @@ module Api::V1
   class UsersController < ApplicationController
     include FirebaseAuthConcern
     include CurrentUserConcern
-    before_action :set_user, except: create
+    before_action :set_user, except: %i[create]
 
     def set_user
       @user = current_user
