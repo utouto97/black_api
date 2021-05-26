@@ -13,6 +13,12 @@ Rails.application.routes.draw do
         post '/follow', to: 'relationships#follow'
         post '/unfollow', to: 'relationships#unfollow'
       end
+
+      scope 'room' do
+        get '/', to: 'rooms#index'
+        post '/', to: 'rooms#create'
+        get '/:id', to: 'rooms#join'
+      end
     end
   end
 end
