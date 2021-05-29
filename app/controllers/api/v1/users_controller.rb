@@ -36,22 +36,5 @@ module Api::V1
       @user.destroy
       render json: { message: 'deleted user', user: @user }
     end
-
-    def rooms
-      render json: { status: :success, rooms: @user.rooms }
-    end
-
-    def join
-      room_id = params[:room_id]
-      @user.join(room_id)
-      render json: { status: :success, room: @user.rooms}
-    end
-
-    def leave
-      room_id = params[:room_id]
-      @user.leave(room_id)
-      render json: { status: :success, room: @user.rooms}
-    end
-
   end
 end

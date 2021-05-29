@@ -10,9 +10,9 @@ Rails.application.routes.draw do
         delete '/', to: 'users#destroy'
 
         scope 'room' do
-          get '/', to: 'users#rooms'
-          post '/:room_id', to: 'users#join'
-          delete  '/:room_id', to: 'users#leave'
+          get '/', to: 'room_users#rooms'
+          post '/:room_id', to: 'room_users#join'
+          delete  '/:room_id', to: 'room_users#leave'
         end
 
         get '/followings', to: 'relationships#followings'
