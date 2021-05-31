@@ -18,6 +18,7 @@ module Api::V1
       room = Room.create(
         name: name,
         password: password,
+        uid: SecureRandom.alphanumeric(10),
       )
       render json: { status: :success, room: room }
     end

@@ -13,8 +13,8 @@ module Api::V1
 
     def join
       room_id = params[:room_id]
-      password = params[:room_password]
-      room = Room.find_by(id: room_id)
+      password = params[:password]
+      room = Room.find_by(uid: room_id)
       if room.password_digest and not room.authenticate(password)
         render json: { status: :unauthorize } and return
       end
