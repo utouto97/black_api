@@ -2,11 +2,6 @@ module Api::V1
   class UsersController < ApplicationController
     include FirebaseAuthConcern
     include CurrentUserConcern
-    before_action :set_user, except: %i[create]
-
-    def set_user
-      @user = current_user
-    end
 
     def index
       users = User.all
@@ -33,8 +28,8 @@ module Api::V1
     end
 
     def destroy
-      @user.destroy
-      render json: { message: 'deleted user', user: @user }
+      current_user.destroy
+      render json: { message: 'deleted user', user: current_user }
     end
   end
 end

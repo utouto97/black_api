@@ -1,11 +1,6 @@
 module Api::V1
   class MessagesController < ApplicationController
     include CurrentUserConcern
-    before_action :set_user
-
-    def set_user
-      @user = current_user
-    end
 
     def index
       room_id = params['room_id']
@@ -14,8 +9,8 @@ module Api::V1
       before = params['before']
 
       render json: { status: :bad_request } and return unless room_id
-      render json: { status: :unauthorized } and return unless @user
-      render json: { status: :unauthorized } and return unless @user.member?(room_id)
+      render json: { status: :unauthorized } and return unless current_user
+      render json: { status: :unauthorized } and return unless current_user.member?(room_id)
 
       messages = Message.joins(:room)
         .where(room: { uid: room_id })
@@ -30,8 +25,8 @@ module Api::V1
       content = params['content']
 
       render json: { status: :bad_request } and return unless room_id
-      render json: { status: :unauthorized } and return unless @user
-      render json: { status: :unauthorized } and return unless @user.member?(room_id)
+      render json: { status: :unauthorized } and return unless current_user
+      render json: { status: :unauthorized } and return unless current_user.member?(room_id)
 
       room = Room.find_by(uid: room_id)
       message = Message.create(

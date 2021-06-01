@@ -1,11 +1,6 @@
 module Api::V1
   class RoomsController < ApplicationController
     include CurrentUserConcern
-    before_action :set_user
-
-    def set_user
-      @user = current_user
-    end
 
     def index
       rooms = Room.all
