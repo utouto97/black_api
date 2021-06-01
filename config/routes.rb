@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       scope 'room' do
         get '/', to: 'rooms#index'
         post '/', to: 'rooms#create'
+
+        get '/:room_id/message', to: 'messages#index'
+        post '/:room_id/message', to: 'messages#create'
       end
     end
   end
