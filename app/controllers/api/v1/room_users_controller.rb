@@ -3,7 +3,10 @@ module Api::V1
     include CurrentUserConcern
 
     def rooms
-      render json: { status: :success, rooms: current_user.rooms }
+      render json: { status: :success, rooms: current_user.rooms.map{|r| {
+        uid: r.uid,
+        name: r.name
+      }}}
     end
 
     def join

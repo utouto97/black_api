@@ -17,6 +17,7 @@ module Api::V1
       messages = messages.where(created_at: Time.zone.parse(after)..) if after
       messages = messages.where(created_at: ..Time.zone.parse(before)) if before
       messages = messages.order(created_at: :desc).limit(lim)
+      messages = messages.joins(:user).select("messages.*, users.username")
       render json: { status: :success, messages: messages }
     end
 
