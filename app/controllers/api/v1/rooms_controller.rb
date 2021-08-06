@@ -11,9 +11,11 @@ module Api::V1
 
     def info
       room = Room.find_by(uid: params.require(:id))
+      users = room.users.select("users.id, username")
       render json: { status: :success, room: {
         uid: room.uid,
-        name: room.name
+        name: room.name,
+        users: users,
       }}
     end
 
