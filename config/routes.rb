@@ -2,32 +2,28 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace 'api' do
     namespace 'v1' do
-      root 'hello#index'
-
       scope 'user' do
         get '/', to: 'users#index'
         post '/', to: 'users#create'
+        patch '/', to: 'users#update'
         delete '/', to: 'users#destroy'
 
         scope 'room' do
-          get '/', to: 'room_users#rooms'
-          get '/:room_id', to: 'room_users#join'
-          post '/:room_id', to: 'room_users#join'
-          delete  '/:room_id', to: 'room_users#leave'
+          get '/', to: 'room_users#index'
+          post '/:room_id', to: 'room_users#create'
+          delete '/:room_id', to: 'room_users#destroy'
         end
-
-        get '/followings', to: 'relationships#followings'
-        post '/follow', to: 'relationships#follow'
-        post '/unfollow', to: 'relationships#unfollow'
       end
 
       scope 'room' do
-        get '/', to: 'rooms#index'
-        get '/:id', to: 'rooms#info'
         post '/', to: 'rooms#create'
+        patch '/:room_id', to: 'rooms#update'
+        delete '/:room_id', to: 'rooms#destroy'
 
-        get '/:room_id/message', to: 'messages#index'
-        post '/:room_id/message', to: 'messages#create'
+        scope 'message' do
+          get '/', to: 'messages#index'
+          post '/', to: 'messages#create'
+        end
       end
     end
   end
