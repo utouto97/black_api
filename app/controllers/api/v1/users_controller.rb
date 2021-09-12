@@ -1,7 +1,8 @@
 module Api::V1
   class UsersController < ApplicationController
     include FirebaseAuthConcern
-    include CurrentUserConcern
+
+    before_action :authenticate_user!
 
     def index
     end

@@ -13,6 +13,28 @@ module Api::V1
     ISSUER_BASE_URL = 'https://securetoken.google.com/'.freeze
     CLIENT_CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
 
+    def authenticate_user!
+      auth = authenticate_token_by_firebase
+      render status: :unauthorized, json: { status: :unauthorized } unless auth[:data]
+    end
+
+    def get_firebase_info
+      auth = authenticate_token_by_firebase
+      return {
+        uid: auth[:data][:uid],
+        email: auth[:data][:decoded_token][:payload]["email"],
+      }
+    end
+
+    def current_user
+      @user = nil
+      uid = get_firebase_info[:uid]
+      @user = User.find_by(firebase_uid: uid) if uid
+      return @user
+    end
+
+    private
+
     def authenticate_token_by_firebase
       authenticate_with_http_token do |token, _|
         return { data: verify_id_token(token) }
@@ -22,7 +44,6 @@ module Api::V1
       { error: 'token invalid' }
     end
 
-    private
 
     def verify_id_token(token)
       raise 'Id token must be a String' unless token.is_a?(String)
