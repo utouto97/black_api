@@ -40,8 +40,5 @@ module Api::V1
         user: current_user
       }
     end
-
-    def destroy
-    end
   end
 end
