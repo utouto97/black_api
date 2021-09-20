@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_31_100512) do
+ActiveRecord::Schema.define(version: 2021_09_12_135331) do
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_05_31_100512) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uid"
+    t.boolean "require_password"
     t.index ["uid"], name: "index_rooms_on_uid", unique: true
   end
 

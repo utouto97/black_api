@@ -6,7 +6,6 @@ Rails.application.routes.draw do
         get '/', to: 'users#index'
         post '/', to: 'users#create'
         patch '/', to: 'users#update'
-        delete '/', to: 'users#destroy'
 
         scope 'room' do
           get '/', to: 'room_users#index'
@@ -16,6 +15,7 @@ Rails.application.routes.draw do
       end
 
       scope 'room' do
+        get '/', to: 'rooms#index'
         post '/', to: 'rooms#create'
         patch '/:room_id', to: 'rooms#update'
         delete '/:room_id', to: 'rooms#destroy'
