@@ -36,7 +36,16 @@ module Api::V1
     end
 
     def update
-      room = Room.find_by(uid: params.require(:room_id))
+      room_id = params.require(:room_id)
+      room = Room.find_by(uid: room_id)
+
+      unless room
+        render status: :not_found, json: {
+          status: :not_found,
+          msg: "The room with id=#{room_id} isn't found."
+        } and return
+      end
+
       room.update(params.require(:room).permit(:name, :password))
 
       render status: :created, json: {
@@ -46,8 +55,15 @@ module Api::V1
     end
 
     def destroy
-      room = Room.find_by(uid: params.require(:room_id))
-      room.destroy
+      room_id = params.require(:room_id)
+      room = Room.find_by(uid: room_id)
+
+      unless room
+        render status: :not_found, json: {
+          status: :not_found,
+          msg: "The room with id=#{room_id} isn't found."
+        } and return
+      end
 
       render status: :created, json: {
         status: :created,
