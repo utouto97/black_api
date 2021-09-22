@@ -20,7 +20,7 @@ Rails.application.routes.draw do
         patch '/:room_id', to: 'rooms#update'
         delete '/:room_id', to: 'rooms#destroy'
 
-        scope 'message' do
+        scope '/:room_id/message' do
           get '/', to: 'messages#index'
           post '/', to: 'messages#create'
         end

@@ -1,6 +1,6 @@
 module Api::V1
   class MessagesController < ApplicationController
-    include CurrentUserConcern
+    include FirebaseAuthConcern
 
     def index
       room_id = params['room_id']
@@ -9,7 +9,6 @@ module Api::V1
       before = params['before']
 
       render json: { status: :bad_request } and return unless room_id
-      render json: { status: :unauthorized } and return unless current_user
       render json: { status: :unauthorized } and return unless current_user.member?(room_id)
 
       messages = Message.joins(:room)
@@ -18,7 +17,10 @@ module Api::V1
       messages = messages.where(created_at: ...Time.zone.parse(before)) if before.present?
       messages = messages.order(created_at: :desc).limit(lim)
       messages = messages.joins(:user).select("messages.*, users.id as user_id, users.username")
-      render json: { status: :success, messages: messages }
+      render status: :ok, json: {
+        status: :ok,
+        messages: messages
+      }
     end
 
     def create
@@ -26,7 +28,6 @@ module Api::V1
       content = params['content']
 
       render json: { status: :bad_request } and return unless room_id
-      render json: { status: :unauthorized } and return unless current_user
       render json: { status: :unauthorized } and return unless current_user.member?(room_id)
 
       room = Room.find_by(uid: room_id)
@@ -35,7 +36,10 @@ module Api::V1
         room_id: room.id,
         content: content
       )
-      render json: { status: :success, messages: message }
+      render status: :ok, json: {
+        status: :success,
+        message: message
+      }
     end
 
   end
