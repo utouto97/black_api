@@ -19,7 +19,7 @@ module Api::V1
       end
 
       param = params.require(:room).permit(:name, :password)
-      password = param[:name] || ""
+      password = param[:password] || ""
       require_password = param[:password].blank?
 
       room = Room.create({
