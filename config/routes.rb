@@ -15,8 +15,9 @@ Rails.application.routes.draw do
       end
 
       scope 'room' do
-        get '/', to: 'rooms#index'
+        # get '/', to: 'rooms#index'
         post '/', to: 'rooms#create'
+        get '/:room_id', to: 'rooms#index'
         patch '/:room_id', to: 'rooms#update'
         delete '/:room_id', to: 'rooms#destroy'
 

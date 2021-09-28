@@ -20,6 +20,7 @@ module Api::V1
 
     def get_firebase_info
       auth = authenticate_token_by_firebase
+      pp auth
       return {
         uid: auth[:data][:uid],
         email: auth[:data][:decoded_token][:payload]["email"],

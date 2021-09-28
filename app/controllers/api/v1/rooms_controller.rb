@@ -5,9 +5,11 @@ module Api::V1
     before_action :authenticate_user!
 
     def index
+      room_id = params.require(:room_id)
+
       render status: :ok, json: {
         status: :ok,
-        rooms: Room.all#.select(:id, :name, :uid),
+        room: Room.select(:id, :uid, :name).find_by(uid: room_id)
       }
     end
 
@@ -20,6 +22,7 @@ module Api::V1
 
       param = params.require(:room).permit(:name, :password)
       password = param[:password] || ""
+      password = "password" if password == ""
       require_password = param[:password].blank?
 
       room = Room.create({

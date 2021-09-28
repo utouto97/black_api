@@ -6,7 +6,7 @@ module Api::V1
       render status: :ok, json: {
         status: :ok,
         user_id: current_user.id,
-        room_ids: current_user.rooms.select(:id, :uid)
+        rooms: current_user.rooms.select(:id, :uid, :name)
       }
     end
 
