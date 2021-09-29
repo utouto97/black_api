@@ -9,7 +9,7 @@ module Api::V1
 
       render status: :ok, json: {
         status: :ok,
-        room: Room.select(:id, :uid, :name).find_by(uid: room_id)
+        room: Room.select(:id, :uid, :name, :require_password).find_by(uid: room_id)
       }
     end
 
