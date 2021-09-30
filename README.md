@@ -1,24 +1,17 @@
-# README
+Black (チャットアプリ) - API側
+==
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails と Vue で開発したチャットアプリ  
+API（バックエンド）側
 
-Things you may want to cover:
+主な機能
+- ユーザー認証
+- ユーザー名変更
+- チャットルーム作成
+- 入室・退室
+- チャット
 
-* Ruby version
+[フロントエンド側のGitHubリポジトリURL](https://github.com/utouto97/black_front)  
+https://github.com/utouto97/black_front
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+<img src="arch.png" width="480">
